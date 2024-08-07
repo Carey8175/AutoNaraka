@@ -15,11 +15,11 @@ def main():
     model.to(device)
 
     # 配置训练参数
-    data = 'config-Cursor.yaml'
-    epochs = 500
+    data = 'SnowMonster.yaml'
+    epochs = 400
 
     # 开始训练并指定设备
-    model.train(data=data, epochs=epochs, device=device, imgsz=1024, batch=5)
+    model.train(data=data, epochs=epochs, device=device, imgsz=640, batch=5)
 
 
 if __name__ == '__main__':
