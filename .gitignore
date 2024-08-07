@@ -164,3 +164,4 @@ cython_debug/
 # img file
 .jpg
 .png
+.mp4
