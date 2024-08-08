@@ -15,7 +15,7 @@ def main():
     model.to(device)
 
     # 配置训练参数
-    data = 'SnowMonster.yaml'
+    data = 'dataset.yaml'
     epochs = 400
 
     # 开始训练并指定设备
