@@ -5,12 +5,19 @@ AN 是一款用于永杰无间（Naraka）自动刷取各种副本地图的工�
 1. 可以切换地图
 2. AI模型训练 
 ### Labels
-1. Sta-Main
-2. Btn-HeroUse
-3. Btn-AcceptMission(New) -- 接受任务
-4. Sta-InGame(New) -- 用血药和甲药的状态来表示InGame
-5. Btn-Transport(New) -- 进入雪万象地图
-6. Btn-Esc
-7. Sta-Success(New)
-8. Btn-ReturnMain
-9. Btn-Continue01
+  0: 'Btn-BuffSelect',      
+  1: 'Btn-HeroUse',     
+  2: 'Btn-ReturnMain',      
+  3: 'Btn-Start',       
+  4: 'Sta-CoExit',      
+  5: 'Btn-Continue01',      
+  6: 'Btn-Continue02',      
+  7: 'Sta-Loading',     
+  8: 'Sta-Main',        
+  9: 'Sta-Esc',     
+  10: 'Sta-BuffSelect',     
+  11: 'Sta-Dead',       
+  12: 'Sta-InGame',     
+  13: 'Sta-Success',        
+  14: 'Btn-Transport',      
+  15: 'Btn-AcceptMission'       

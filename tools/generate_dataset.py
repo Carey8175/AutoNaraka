@@ -72,6 +72,7 @@ def select_and_move_images(source_folder, new_source_folder, percentage=10):
                 if os.path.exists(txt_src):  # 确保txt文件存在才移动
                     shutil.copy(txt_src, os.path.join(new_source_folder, 'labels',
                                                       'train' if img_name not in selected_images else 'val'))
+                    print(f'{img_src} has been moved to {new_source_folder}')
 
                 else:
                     os.remove(img_src)
