@@ -1,22 +1,22 @@
-path: ../data  # dataset root dir
+path: ../../data  # dataset root dir
 train: images/train  # train images (relative to 'path') 4 images
 val: images/val  # val images (relative to 'path') 4 images
 
 
 names:
-  0: 'Btn-BuffSelect',
-  1: 'Btn-HeroUse',
-  2: 'Btn-ReturnMain',
-  3: 'Btn-Start',
-  4: 'Sta-CoExit',
-  5: 'Btn-Continue01',
-  6: 'Btn-Continue02',
-  7: 'Sta-Loading',
-  8: 'Sta-Main',
-  9: 'Sta-Esc',
-  10: 'Sta-BuffSelect',
-  11: 'Sta-Dead',
-  12: 'Sta-InGame',
-  13: 'Sta-Success',
-  14: 'Btn-Transport',
+  0: 'Btn-BuffSelect'
+  1: 'Btn-HeroUse'
+  2: 'Btn-ReturnMain'
+  3: 'Btn-Start'
+  4: 'Sta-CoExit'
+  5: 'Btn-Continue01'
+  6: 'Btn-Continue02'
+  7: 'Sta-Loading'
+  8: 'Sta-Main'
+  9: 'Sta-Esc'
+  10: 'Sta-BuffSelect'
+  11: 'Sta-Dead'
+  12: 'Sta-InGame'
+  13: 'Sta-Success'
+  14: 'Btn-Transport'
   15: 'Btn-AcceptMission'
