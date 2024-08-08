@@ -78,6 +78,6 @@ def select_and_move_images(source_folder, new_source_folder, percentage=10):
                     print(f'由于标签文件不存在，删除：{img_src}')
 
 # 使用示例
-source_data_folder = '../Cursor'
+source_data_folder = '/root/autodl-fs/dataset'
 new_data_folder = '../data'
 select_and_move_images(source_data_folder, new_data_folder)
