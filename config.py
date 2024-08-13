@@ -1,4 +1,4 @@
-MODEL_PATH = './models/l.pt'
+MODEL_PATH = './models/v1.pt'
 
 # 其他置信度
 CONFIDENCE = 0.75
@@ -22,8 +22,8 @@ LABELS = {
     11: 'Sta-Dead',
     12: 'Sta-InGame',
     13: 'Sta-Success',
-    14: 'Btn-AcceptMission',
-    15: 'Btn-Transport'
+    14: 'Btn-Transport',
+    15: 'Btn-AcceptMission'
 }
 
 ATTACK_LABELS = {

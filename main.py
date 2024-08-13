@@ -25,6 +25,7 @@ class CaNaraka:
         # init running parameters
         self.enable_ca_naraka = False
         self.status = 'Sta-Main'
+        self.select_hero = False
         # ------------------------------
         # init the screen capture
         self.screen_capture = ScreenCapture(None)
@@ -56,12 +57,17 @@ class CaNaraka:
         #     return '无目标'
 
         labels_boxes = {}
+        accept_mission_count = 0
         for box in result.boxes:
             if float(box.conf) >= CONFIDENCE:
                 # AcceptMission
                 if LABELS[int(box.cls)] == 'Btn-AcceptMission':
-                    labels_boxes[LABELS[int(box.cls)]] = box
-                elif LABELS[int(box.cls)] != 'Sta-CoExit':
+                    accept_mission_count += 1
+
+                    if accept_mission_count == 1 or labels_boxes['Btn-AcceptMission'].xyxy[0][0] < box.xyxy[0][0]:
+                        labels_boxes[LABELS[int(box.cls)]] = box
+
+                else:
                     labels_boxes[LABELS[int(box.cls)]] = box
 
         # # 状态自更新
@@ -91,22 +97,57 @@ class CaNaraka:
         elif self.status == 'Sta-HeroChoose':
             if 'Btn-HeroUse' in labels_boxes.keys():
                 Action.box_click(labels_boxes['Btn-HeroUse'])
-                self.status = 'Sta-Loading'
+                self.select_hero = True
                 return '已选择英雄'
 
-            elif 'Sta-InGame' in labels_boxes.keys():
+            elif 'Btn-AcceptMission' in labels_boxes.keys():
+                if accept_mission_count == 2:
+                    Action.box_click(labels_boxes['Btn-AcceptMission'])
+
+                time.sleep(10)
+                return 'Mission'
+
+            elif 'Sta-Loading' in labels_boxes.keys() and self.select_hero:
+                self.status = 'Sta-Loading'
+                return 'Game before Start'
+
+        # 游戏开始前的准备
+        elif self.status == 'Sta-Loading':
+            # if 'Btn-Transport' in labels_boxes.keys():
+            #     self.keyboard.press('e')
+            #     time.sleep(0.01)
+            #     self.keyboard.release('e')
+            #
+            #     time.sleep(5)
+            #     self.keyboard.press(Key.esc)
+            #     self.keyboard.release(Key.esc)
+            #
+            #     self.status = 'Sta-InGame'
+            #
+            #     return 'Transport'
+
+            if 'Sta-InGame' in labels_boxes.keys():
+                Action.run(5)
+
+                self.keyboard.press('e')
+                time.sleep(0.01)
+                self.keyboard.release('e')
+
+                time.sleep(6)
+                self.keyboard.press(Key.esc)
+                self.keyboard.release(Key.esc)
+
+                time.sleep(2)
+                Action.auto_seek()
+
                 self.status = 'Sta-InGame'
-                return 'Game Start'
+
+                return 'Run'
 
         # 游戏状态下的流程 ---------------------------------------------
         elif self.status == 'Sta-InGame':
-            if 'Sta-Esc' in labels_boxes.keys():
-                self.keyboard.press(Key.esc)
-                self.keyboard.release(Key.esc)
-                return '跳过出厂动画'
-
-            # 游戏正常结束
-            elif 'Btn-Continue01' in labels_boxes.keys() or 'Btn-Continue02' in labels_boxes.keys():
+            # 游戏正常结
+            if 'Btn-Continue01' in labels_boxes.keys() or 'Btn-Continue02' in labels_boxes.keys():
                 self.keyboard.press(Key.space)
                 self.keyboard.release(Key.space)
                 self.status = 'Sta-Exit'
@@ -120,11 +161,6 @@ class CaNaraka:
                 self.status = 'Sta-Exit'
 
                 return 'Game Success'
-
-            else:
-                # pass
-
-                return '攻击策略'
 
         # 退出状态下的流程 ---------------------------------------------
         elif self.status == 'Sta-Exit':
@@ -144,22 +180,37 @@ class CaNaraka:
                     self.keyboard.press(Key.space)
                     self.keyboard.release(Key.space)
                     Action.click(100, 100)
-                    time.sleep(10)
+                    time.sleep(3)
                 return '继续01'
 
             elif 'Btn-Continue02' in labels_boxes.keys():
                 Action.box_click(labels_boxes['Btn-Continue02'])
-                self.continued = True
                 time.sleep(1)  # 防止点击失效
                 return '继续02'
 
             elif 'Btn-Start' in labels_boxes.keys() and self.continued:
                 self.status = 'Sta-Main'
+                self.select_hero = False
 
                 return '大厅'
 
+    def attack_system(self):
+        count = 0
+        while True:
+            if self.status == 'Sta-InGame' and self.enable_ca_naraka:
+                Action.left_click()
+                print('Atk-System is working!')
+                if count % 200 == 0:
+                    self.keyboard.press('f')
+                    self.keyboard.release('f')
+                    count = 0
+
+                time.sleep(0.01)
+                count += 1
+
     def start(self):
         self.message_displayer.print_message('CaNaraka is ready!')
+        threading.Thread(target=self.attack_system).start()
         while True:
             if not self.enable_ca_naraka:
                 time.sleep(0.1)

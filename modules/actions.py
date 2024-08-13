@@ -147,6 +147,12 @@ class Action:
         time.sleep(0.01)
         keyboard.release('`')
 
+    @staticmethod
+    def left_click():
+        mouse.click(Button.left)
+        time.sleep(0.01)
+        mouse.release(Button.left)
+
 
 if __name__ == '__main__':
     time.sleep(5)
